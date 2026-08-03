@@ -65,7 +65,7 @@ export const projects: Project[] = [
     ],
     technologies: ["Python", "FastAPI", "Qdrant", "scikit-learn", "React", "Docker"],
     github: "https://github.com/Faiz-1606/Repo-onboarder",
-    live: "",
+    live: "https://repo-onboarder-sigma.vercel.app/",
     thumbnail: null,
     gallery: [],
     architectureDiagram: ["repo clone", "AST / tree-sitter chunking", "2× Qdrant collections", "regex router", "cited answer"],

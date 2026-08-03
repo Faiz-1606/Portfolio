@@ -42,14 +42,14 @@ function ProjectLinks({ project }) {
           rel="noreferrer"
           className="inline-flex items-center gap-2.5 border border-line px-4 py-2.5 font-mono text-xs text-ink transition-colors hover:border-accent/60 hover:text-accent"
         >
-          <GitHubIcon /> GitHub Repository <ArrowIcon className="h-3 w-3" />
+          <GitHubIcon /> GitHub  <ArrowIcon className="h-3 w-3" />
         </a>
       ) : (
         <span
           aria-disabled="true"
           className="inline-flex cursor-default select-none items-center gap-2.5 border border-line/60 px-4 py-2.5 font-mono text-xs text-faint"
         >
-          <GitHubIcon /> GitHub Repository
+          <GitHubIcon /> GitHub 
         </span>
       )}
       {project.live && (
