@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b0b0a;
+  --color-panel: #111110;
+  --color-ink: #e8e6e0;
+  --color-muted: #9b978b;
+  --color-faint: #817d72;
+  --color-accent: #ff5a1f;
+  --color-line: rgba(232, 230, 224, 0.12);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+}
+
+:root {
+  --ghost-stroke: rgba(232, 230, 224, 0.14);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --color-bg: #faf8f4;
+  --color-panel: #ffffff;
+  --color-ink: #191613;
+  --color-muted: #5f5a51;
+  --color-faint: #767065;
+  --color-accent: #c2410c;
+  --color-line: rgba(25, 22, 19, 0.14);
+  --ghost-stroke: rgba(25, 22, 19, 0.17);
+  color-scheme: light;
+}
+
+:root[data-theme="dim"] {
+  --color-bg: #17181a;
+  --color-panel: #1e2023;
+  --color-ink: #e4e2dd;
+  --color-muted: #9c988e;
+  --color-faint: #817d73;
+  --color-accent: #ff5a1f;
+  --color-line: rgba(228, 226, 221, 0.12);
+  --ghost-stroke: rgba(228, 226, 221, 0.13);
+  color-scheme: dark;
+}
+
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    fill 0.25s ease,
+    stroke 0.25s ease,
+    -webkit-text-stroke-color 0.25s ease !important;
+}
+
+html {
+  background-color: var(--color-bg);
+  scroll-behavior: auto; 
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv05";
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-ink) 22%, var(--color-bg));
+  border: 3px solid var(--color-bg);
+  border-radius: 8px;
+}
+
+.text-ghost {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ghost-stroke);
+  transition: -webkit-text-stroke-color 0.35s ease;
+}
+@media (min-width: 1024px) {
+  .group\/project:hover .text-ghost {
+    -webkit-text-stroke-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  }
+}
+
+.link-under {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease-out;
+}
+.link-under:hover,
+.link-under:focus-visible {
+  background-size: 100% 1px;
+}
+
+@keyframes log-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+.log-ticker {
+  animation: log-scroll 90s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .log-ticker {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

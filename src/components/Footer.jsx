@@ -1,0 +1,81 @@
+import { motion } from "framer-motion";
+import { site } from "../data/site.js";
+import { contact } from "../data/contact.js";
+import { socials } from "../data/socials.js";
+import { fade, fadeUp, heading, stagger, viewportOnce } from "../lib/motion.js";
+
+export default function Footer() {
+  return (
+    <footer id="contact" className="border-t border-line">
+      {/* Reveal sequence: label → heading → email → socials → meta */}
+      <motion.div
+        variants={stagger(0.12)}
+        initial="hidden"
+        whileInView="show"
+        viewport={viewportOnce}
+        className="mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-32"
+      >
+        <motion.p variants={fadeUp} className="mb-10 font-mono text-xs tracking-widest text-accent">
+          07 / CONTACT
+        </motion.p>
+
+        <motion.h2
+          variants={heading}
+          className="font-display text-[clamp(2.4rem,8vw,7rem)] font-semibold leading-[1.05] tracking-tight"
+        >
+          {site.footer.signoff.map((lineText, i) => (
+            <span key={i} className="block">
+              {i === 1 ? <span className="text-accent">{lineText}</span> : lineText}
+            </span>
+          ))}
+        </motion.h2>
+
+        <motion.div variants={fadeUp} className="mt-14">
+          <a
+            href={`mailto:${contact.email}`}
+            className="link-under break-all font-mono text-lg text-ink transition-colors hover:text-accent md:text-2xl"
+          >
+            {contact.email}
+          </a>
+        </motion.div>
+
+        <motion.ul
+          variants={stagger(0.08)}
+          className="mt-10 flex flex-wrap items-baseline gap-x-8 gap-y-3"
+        >
+          {socials.map((social) =>
+            social.url ? (
+              <motion.li key={social.id} variants={fadeUp}>
+                <a
+                  href={social.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-under font-mono text-xs uppercase tracking-widest text-muted transition-colors hover:text-ink"
+                >
+                  {social.label} ↗
+                </a>
+              </motion.li>
+            ) : (
+              <motion.li
+                key={social.id}
+                variants={fadeUp}
+                className="font-mono text-xs uppercase tracking-widest text-faint"
+                title="Link coming soon"
+              >
+                {social.label}
+              </motion.li>
+            )
+          )}
+        </motion.ul>
+
+        <motion.p
+          variants={fade}
+          className="mt-24 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-8 font-mono text-[11px] text-faint"
+        >
+          <span>© 2026 {site.name}</span>
+          <span>designed &amp; engineered by Faiz</span>
+        </motion.p>
+      </motion.div>
+    </footer>
+  );
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash.
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dim") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+    <title>Faiz Mohammed Zameer — AI & Software Engineer</title>
+    <meta
+      name="description"
+      content="Faiz Mohammed Zameer builds intelligent software — AI-powered products, developer tools, and full-stack systems, from computer-vision pipelines to RL environments."
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Faiz Mohammed Zameer — AI & Software Engineer" />
+    <meta
+      property="og:description"
+      content="AI-powered products, developer tools, and full-stack systems — from computer-vision pipelines to RL environments."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Faiz Mohammed Zameer — AI & Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="AI-powered products, developer tools, and full-stack systems — from computer-vision pipelines to RL environments."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='monospace' fill='%23FF5A1F'>F</text></svg>"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
