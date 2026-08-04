@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { experience } from "../data/experience.js";
 import SectionHeader from "./SectionHeader.jsx";
+import SectionShell from "./SectionShell.jsx";
 import { delayedFade, viewportOnce } from "../lib/motion.js";
 
 export default function Experience() {
   return (
-    <section id="experience" className="mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-32">
+    <SectionShell id="experience" className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-32">
       <SectionHeader index="03" title="Experience" />
 
       <div className="space-y-20">
@@ -49,6 +50,6 @@ export default function Experience() {
           </motion.article>
         ))}
       </div>
-    </section>
+    </SectionShell>
   );
 }

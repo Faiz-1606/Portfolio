@@ -1,6 +1,7 @@
 import { MotionConfig } from "framer-motion";
 import { LenisProvider } from "./lib/LenisProvider.jsx";
 import { ThemeProvider } from "./lib/ThemeProvider.jsx";
+import BackToTop from "./components/BackToTop.jsx";
 import Nav from "./components/Nav.jsx";
 import Hero from "./components/Hero.jsx";
 import Work from "./components/Work.jsx";
@@ -27,6 +28,7 @@ export default function App() {
             <Blog />
           </main>
           <Footer />
+          <BackToTop />
         </LenisProvider>
       </MotionConfig>
     </ThemeProvider>

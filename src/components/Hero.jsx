@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { site } from "../data/site.js";
+import { useScrollTo } from "../lib/LenisProvider.jsx";
 import { EASE } from "../lib/motion.js";
 
 const LOG_LINES = [
@@ -34,12 +35,17 @@ const line = {
 };
 
 export default function Hero() {
+  const scrollTo = useScrollTo();
+
   return (
-    <section className="relative flex min-h-svh items-center overflow-hidden" id="top">
+    <section
+      className="relative flex items-start overflow-hidden md:min-h-svh md:items-center"
+      id="top"
+    >
       {/* Looping training log — muted, non-distracting */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[44%] select-none overflow-hidden opacity-[0.16] md:block"
+        className="absolute inset-y-0 right-0 hidden w-[44%] select-none overflow-hidden opacity-[0.16] md:block"
         style={{
           maskImage: "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)",
           WebkitMaskImage:
@@ -59,7 +65,7 @@ export default function Hero() {
         variants={parent}
         initial="hidden"
         animate="show"
-        className="relative mx-auto w-full max-w-6xl px-5 pb-24 pt-32 md:px-8"
+        className="relative mx-auto w-full max-w-6xl px-5 pb-10 pt-36 md:px-8 md:pb-24 md:pt-32"
       >
         <motion.p variants={line} className="mb-6 font-mono text-xs tracking-widest text-accent">
           {site.role.toUpperCase()}
@@ -83,11 +89,22 @@ export default function Hero() {
           {site.hero.subline}
         </motion.p>
 
-        <motion.div variants={line} className="mt-16 flex items-center gap-3">
-          <span aria-hidden className="h-px w-10 bg-accent" />
-          <span className="font-mono text-[11px] uppercase tracking-widest text-faint">
-            scroll — the work speaks
-          </span>
+        <motion.div variants={line} className="mt-10 md:mt-16">
+          <button
+            onClick={() => scrollTo("#about")}
+            className="group inline-flex min-h-[44px] items-center gap-3 text-left"
+          >
+            {/* Hairline carries a repeating sweep toward the label. */}
+            <span
+              aria-hidden
+              className="relative h-px w-10 shrink-0 overflow-hidden bg-accent/30"
+            >
+              <span className="cue-sweep absolute inset-y-0 left-0 w-1/2 bg-accent" />
+            </span>
+            <span className="font-mono text-[11px] uppercase tracking-widest text-faint transition-colors group-hover:text-ink group-active:text-accent">
+              scroll — the work speaks
+            </span>
+          </button>
         </motion.div>
       </motion.div>
     </section>

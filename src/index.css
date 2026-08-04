@@ -114,7 +114,8 @@ body {
   transition: background-size 0.25s ease-out;
 }
 .link-under:hover,
-.link-under:focus-visible {
+.link-under:focus-visible,
+.link-under.is-active {
   background-size: 100% 1px;
 }
 
@@ -129,10 +130,31 @@ body {
 .log-ticker {
   animation: log-scroll 90s linear infinite;
 }
+/* Let a curious visitor stop the log to actually read a line. */
+.log-ticker:hover {
+  animation-play-state: paused;
+}
+
+@keyframes cue-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%,
+  100% {
+    transform: translateX(200%);
+  }
+}
+.cue-sweep {
+  animation: cue-sweep 2.4s ease-in-out infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .log-ticker {
+  .log-ticker,
+  .cue-sweep {
     animation: none;
+  }
+  .cue-sweep {
+    width: 100%;
   }
   html {
     scroll-behavior: auto;

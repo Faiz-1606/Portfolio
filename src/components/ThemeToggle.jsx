@@ -21,7 +21,7 @@ export default function ThemeToggle({ className = "" }) {
             aria-label={`${t.label} theme`}
             title={`${t.label} theme`}
             onClick={() => setTheme(t.id)}
-            className="group relative flex h-6 w-6 items-center justify-center"
+            className="group relative flex h-9 w-9 items-center justify-center lg:h-6 lg:w-6"
           >
             {active && (
               <motion.span

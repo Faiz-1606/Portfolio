@@ -27,6 +27,12 @@ export const chip = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: EASE } },
 };
 
+// Section-header letters rise out of an overflow-hidden mask.
+export const maskRise = {
+  hidden: { y: "110%", opacity: 0 },
+  show: { y: "0%", opacity: 1, transition: { duration: 0.55, ease: EASE } },
+};
+
 // Hairlines grow from their origin instead of fading.
 export const lineGrow = {
   hidden: { scaleX: 0 },

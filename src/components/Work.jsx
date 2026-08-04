@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { projects } from "../data/projects";
+import Magnetic from "./Magnetic.jsx";
 import SectionHeader from "./SectionHeader.jsx";
+import SectionShell from "./SectionShell.jsx";
 import { useThemeAsset } from "../lib/ThemeProvider.jsx";
 import {
   chip,
@@ -9,7 +11,6 @@ import {
   fadeUp,
   heading,
   imgScale,
-  maskReveal,
   panelFade,
   panelIn,
   stagger,
@@ -36,14 +37,16 @@ function ProjectLinks({ project }) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
       {project.github ? (
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2.5 border border-line px-4 py-2.5 font-mono text-xs text-ink transition-colors hover:border-accent/60 hover:text-accent"
-        >
-          <GitHubIcon /> GitHub  <ArrowIcon className="h-3 w-3" />
-        </a>
+        <Magnetic>
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2.5 border border-line px-4 py-2.5 font-mono text-xs text-ink transition-colors hover:border-accent/60 hover:text-accent"
+          >
+            <GitHubIcon /> GitHub  <ArrowIcon className="h-3 w-3" />
+          </a>
+        </Magnetic>
       ) : (
         <span
           aria-disabled="true"
@@ -53,41 +56,85 @@ function ProjectLinks({ project }) {
         </span>
       )}
       {project.live && (
-        <a
-          href={project.live}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2.5 border border-line px-4 py-2.5 font-mono text-xs text-ink transition-colors hover:border-accent/60 hover:text-accent"
-        >
-          Live demo <ArrowIcon className="h-3 w-3" />
-        </a>
+        <Magnetic>
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2.5 border border-line px-4 py-2.5 font-mono text-xs text-ink transition-colors hover:border-accent/60 hover:text-accent"
+          >
+            Live demo <ArrowIcon className="h-3 w-3" />
+          </a>
+        </Magnetic>
       )}
     </div>
   );
 }
 
-function DiagramFlow({ steps }) {
+const STEP_MS = 800;
+
+function DiagramFlow({ steps, running = true }) {
+  const reduceMotion = useReducedMotion();
+  const [active, setActive] = useState(-1);
+
+  useEffect(() => {
+    if (!running || reduceMotion || steps.length === 0) {
+      setActive(-1);
+      return undefined;
+    }
+    let tick = 0;
+    const id = setInterval(() => {
+      if (tick >= steps.length) {
+        clearInterval(id);
+        setActive(-1);
+        return;
+      }
+      setActive(tick);
+      tick += 1;
+    }, STEP_MS);
+    return () => clearInterval(id);
+  }, [running, reduceMotion, steps.length]);
+
   return (
     <div className="flex flex-wrap items-center gap-y-2 font-mono text-[11px] leading-none">
       {steps.map((step, i) => (
         <span key={step} className="flex items-center">
-          <span className="rounded-sm border border-line bg-bg px-2.5 py-2 text-ink/90">{step}</span>
-          {i < steps.length - 1 && <span className="px-1.5 text-accent">→</span>}
+          <span
+            className={`rounded-sm border px-2.5 py-2 transition-colors duration-500 ${
+              active === i
+                ? "border-accent/70 bg-accent/10 text-ink"
+                : "border-line bg-bg text-ink/90"
+            }`}
+          >
+            {step}
+          </span>
+          {i < steps.length - 1 && (
+            <span
+              className={`px-1.5 transition-colors duration-500 ${
+                active === i ? "text-accent" : "text-accent/40"
+              }`}
+            >
+              →
+            </span>
+          )}
         </span>
       ))}
     </div>
   );
 }
 
-function ProjectPanel({ project }) {
+function ProjectPanel({ project, showLabel = true, diagramRunning = true }) {
   const themedAsset = useThemeAsset();
   const thumbnail = themedAsset(project.thumbnail);
 
   return (
     <div className="border border-line bg-panel p-6 md:p-7">
-      <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
-        Engineering notes
-      </p>
+      {/* The accordion supplies its own label, so it suppresses this one. */}
+      {showLabel && (
+        <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
+          Engineering notes
+        </p>
+      )}
 
       {thumbnail && (
         <div className="mb-5 overflow-hidden border border-line">
@@ -103,7 +150,7 @@ function ProjectPanel({ project }) {
 
       {project.architectureDiagram?.length > 0 && (
         <div className="mb-6">
-          <DiagramFlow steps={project.architectureDiagram} />
+          <DiagramFlow steps={project.architectureDiagram} running={diagramRunning} />
         </div>
       )}
 
@@ -133,10 +180,69 @@ function ProjectPanel({ project }) {
   );
 }
 
+function NotesStub({ count }) {
+  return (
+    <div className="border border-dashed border-line/70 bg-panel/30 p-6 transition-colors duration-300 group-hover/project:border-line md:p-7">
+      <p className="flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.25em] text-faint/70 transition-colors duration-300 group-hover/project:text-accent">
+        Engineering notes
+        <span aria-hidden className="text-sm leading-none">
+          +
+        </span>
+      </p>
+      <p className="mt-4 font-mono text-[11px] text-faint/50">
+        
+      </p>
+    </div>
+  );
+}
+
+function ChevronIcon({ className = "h-3.5 w-3.5" }) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden className={className}>
+      <path d="m4 6 4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function NotesAccordion({ project }) {
+  const [open, setOpen] = useState(false);
+  const panelId = `notes-${project.id}`;
+
+  return (
+    <div className="border-t border-line">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={panelId}
+        className="flex min-h-[44px] w-full items-center justify-between gap-4 py-3 font-mono text-[10px] uppercase tracking-[0.25em] text-accent transition-colors active:text-ink"
+      >
+        Engineering notes
+        <ChevronIcon
+          className={`h-3.5 w-3.5 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {/* grid-rows 0fr→1fr expands to the content's natural height with no
+          JS measurement, so an interrupted toggle can't strand a stale one. */}
+      <div
+        id={panelId}
+        className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="min-h-0">
+          <div className="pb-4">
+            <ProjectPanel project={project} showLabel={false} diagramRunning={open} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProjectRow({ project, canHover }) {
   const [hovered, setHovered] = useState(false);
   const reduceMotion = useReducedMotion();
-  const revealVariants = reduceMotion ? panelFade : maskReveal;
   const hoverVariants = reduceMotion ? panelFade : panelIn;
 
   return (
@@ -177,7 +283,21 @@ function ProjectRow({ project, canHover }) {
             variants={heading}
             className="font-display text-4xl font-semibold tracking-tight transition-colors duration-300 md:text-6xl lg:group-hover/project:text-accent"
           >
-            {project.title}
+            {/* Stretched link: the ::after covers the whole row, so anywhere in
+                it opens the repo — and the row inherits the pointer cursor,
+                which is what signals the row is live in the first place. */}
+            {project.github ? (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noreferrer"
+                className="after:absolute after:inset-0 after:z-[1] after:content-['']"
+              >
+                {project.title}
+              </a>
+            ) : (
+              project.title
+            )}
           </motion.h3>
 
           <motion.p variants={fade} className="mt-4 max-w-md text-lg leading-relaxed text-muted">
@@ -212,17 +332,19 @@ function ProjectRow({ project, canHover }) {
             ))}
           </motion.ul>
 
-          <motion.div variants={fade} className="mt-8">
+          {/* Sits above the stretched link so the buttons keep their own targets. */}
+          <motion.div variants={fade} className="relative z-10 mt-8">
             <ProjectLinks project={project} />
           </motion.div>
         </motion.div>
 
         {}
         {canHover && (
-          <div className="relative hidden min-h-[300px] lg:col-span-5 lg:col-start-8 lg:block">
-            <AnimatePresence>
-              {hovered && (
+          <div className="relative z-10 hidden min-h-[300px] lg:col-span-5 lg:col-start-8 lg:block">
+            <AnimatePresence initial={false}>
+              {hovered ? (
                 <motion.div
+                  key="panel"
                   variants={hoverVariants}
                   initial="hidden"
                   animate="show"
@@ -231,22 +353,26 @@ function ProjectRow({ project, canHover }) {
                 >
                   <ProjectPanel project={project} />
                 </motion.div>
+              ) : (
+                <motion.div
+                  key="stub"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2"
+                >
+                  <NotesStub count={project.notes.length} />
+                </motion.div>
               )}
             </AnimatePresence>
           </div>
         )}
 
         {}
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className={canHover ? "lg:hidden" : "lg:col-span-5 lg:col-start-8"}
-        >
-          <motion.div variants={revealVariants}>
-            <ProjectPanel project={project} />
-          </motion.div>
-        </motion.div>
+        <div className={`relative z-10 ${canHover ? "lg:hidden" : "lg:col-span-5 lg:col-start-8"}`}>
+          <NotesAccordion project={project} />
+        </div>
       </div>
     </article>
   );
@@ -264,7 +390,7 @@ export default function Work() {
   }, []);
 
   return (
-    <section id="work" className="overflow-x-clip pt-24 md:pt-32">
+    <SectionShell id="work" className="overflow-x-clip pt-12 md:pt-32">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <SectionHeader index="02" title="Work" />
       </div>
@@ -273,6 +399,6 @@ export default function Work() {
           <ProjectRow key={project.id} project={project} canHover={canHover} />
         ))}
       </div>
-    </section>
+    </SectionShell>
   );
 }

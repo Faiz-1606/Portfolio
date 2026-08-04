@@ -20,12 +20,20 @@ All portfolio content lives in `src/data/`. The UI renders from these files:
 | `experience.js` | Experience entries                                              |
 | `skills.js`     | Skill groups                                                    |
 | `teaching.js`   | AI Ninjas section                                               |
-| `about.js`      | About paragraphs + tags                                         |
+| `about.js`      | About paragraphs + tags, and the résumé link                     |
 | `site.js`       | Hero copy, footer sign-off, nav links                           |
 | `blog.js`       | Blog posts (empty for now — add posts and the section renders them) |
 | `socials.js`    | GitHub / LinkedIn links (`url: null` renders as muted text)     |
 | `contact.js`    | Email                                                           |
 | `education.js`  | Education (data only, not rendered yet)                         |
+
+### Static files (résumé, images)
+
+Anything referenced by an absolute URL must live in `public/` — that is the only
+directory Vite copies into `dist/`. A file sitting at the repo root still loads
+in `npm run dev` but 404s in production. Match the filename's case exactly too;
+Linux hosts are case-sensitive even though Windows dev is not. The résumé is
+`public/FAIZ.pdf`, referenced as `/FAIZ.pdf` from `about.js`.
 
 ### Adding project links & media
 

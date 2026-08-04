@@ -30,7 +30,7 @@ export const projects: Project[] = [
     title: "UndertriAI",
     hook: "Agentic bail-assessment RL environment.",
     description:
-      "A sequential 10-action RL environment that trains LLMs — via GRPO, HuggingFace TRL, and Unsloth — to reason through Indian bail cases the way a judge structures the decision.",
+      "A sequential 10-action RL environment that trains LLMs via GRPO, HuggingFace TRL, and Unsloth — to reason through Indian bail cases the way a judge structures the decision.",
     notes: [
       "5-component deterministic reward function, including an explicit demographic-bias penalty.",
       "Trained on 1,200 real High Court judgments across 4 curriculum stages.",
@@ -58,7 +58,7 @@ export const projects: Project[] = [
     description:
       "Indexes source code and Git commit history into two independent Qdrant vector collections with separate TF-IDF embeddings, so \"what does this function do\" and \"why did this change\" never contaminate each other.",
     notes: [
-      "Parses Python/JS/TS via AST + tree-sitter — 200+ chunks indexed in under 5 seconds.",
+      "Parses Python/JS/TS via AST + tree-sitter which indexes 200+ chunks in under 5 seconds.",
       "Zero-latency regex query routing decides code vs. history before any embedding runs.",
       "Every answer carries file or commit-hash citations, so nothing is unverifiable.",
       "Two collections, two TF-IDF vocabularies: code tokens and commit prose are different languages.",
@@ -82,7 +82,7 @@ export const projects: Project[] = [
     title: "Container Port",
     hook: "RL environment for container yard operations at shipping ports.",
     description:
-      "A simulation-based, OpenEnv-compatible RL environment for managing and improving container yard operations — crane moves, stacking decisions, and yard congestion as a sequential decision problem.",
+      "A simulation-based, OpenEnv-compatible RL environment for managing and improving container yard operations like moving cranes, stacking decisions, and yard congestion as a sequential decision problem.",
     notes: [
       "Yard state, vessel schedules, and crane allocation modeled as one simulation loop.",
       "OpenEnv-compatible interface — the same agent code that runs on UndertriAI runs here.",
@@ -107,7 +107,7 @@ export const projects: Project[] = [
     title: "Smart ECU",
     hook: "Bluetooth-enabled ECU: Android app + Arduino embedded controller.",
     description:
-      "A Kotlin Android application communicating over Bluetooth (HC-05) with an Arduino-powered ECU simulator — ignition control, command processing, real-time diagnostics, and serial communication.",
+      "A Kotlin Android application communicating over Bluetooth (HC-05) with an Arduino-powered ECU simulator that simulates ignition control, command processing, real-time diagnostics, and serial communication.",
     notes: [
       "Hardware–software integration end to end: app UI → Bluetooth frames → serial → actuator.",
       "Real-time diagnostics streamed back from the ECU over the same HC-05 link.",
@@ -132,7 +132,7 @@ export const projects: Project[] = [
     title: "Huxler",
     hook: "Full-stack collaboration platform with real-time everything.",
     description:
-      "Real-time messaging via Socket.io, AI-powered project idea generation through the OpenAI API, and AWS S3 file storage — 21 database models under one Next.js 14 + TypeScript + PostgreSQL roof.",
+      "Real-time messaging via Socket.io, AI-powered project idea generation through the OpenAI API, and AWS S3 file storage with 21 database models under one Next.js 14 + TypeScript + PostgreSQL roof.",
     notes: [
       "Unlimited channels per project with WebSocket delivery, live typing indicators, and cross-project notifications.",
       "Drag-and-drop Kanban boards for task management, backed by Prisma ORM over complex relational data.",

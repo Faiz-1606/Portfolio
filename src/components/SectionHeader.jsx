@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { heading, lineGrow, stagger, viewportOnce } from "../lib/motion.js";
+import { lineGrow, maskRise, stagger, viewportOnce } from "../lib/motion.js";
 
 export default function SectionHeader({ index, title }) {
   return (
@@ -8,17 +8,25 @@ export default function SectionHeader({ index, title }) {
       initial="hidden"
       whileInView="show"
       viewport={viewportOnce}
-      className="mb-14 flex items-baseline gap-4 md:mb-20"
+      className="mb-10 flex items-baseline gap-4 md:mb-20"
     >
-      <motion.span variants={heading} className="font-mono text-xs text-accent">
-        {index}
-      </motion.span>
-      <motion.h2
-        variants={heading}
-        className="font-mono text-xs uppercase tracking-[0.25em] text-muted"
+      <span className="inline-block overflow-hidden font-mono text-xs">
+        <motion.span variants={maskRise} className="inline-block text-accent">
+          {index}
+        </motion.span>
+      </span>
+      <h2
+        aria-label={title}
+        className="overflow-hidden font-mono text-xs uppercase tracking-[0.25em] text-muted"
       >
-        {title}
-      </motion.h2>
+        <motion.span variants={stagger(0.035)} aria-hidden className="inline-block whitespace-nowrap">
+          {title.split("").map((ch, i) => (
+            <motion.span key={i} variants={maskRise} className="inline-block">
+              {ch === " " ? " " : ch}
+            </motion.span>
+          ))}
+        </motion.span>
+      </h2>
       <motion.span
         variants={lineGrow}
         aria-hidden

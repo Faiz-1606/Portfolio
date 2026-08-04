@@ -2,7 +2,7 @@ export const teaching = {
   org: "AI Ninjas",
   role: "Course designer & instructor",
   summary:
-    "I design and teach AI/ML curriculum for high school students — taking them from \"what is a tensor\" to training their own models.",
+    "I design and teach AI/ML curriculum for high school students, taking them from \"what is a tensor\" to training their own models.",
   curriculum: [
     {
       title: "Annotated notebooks",

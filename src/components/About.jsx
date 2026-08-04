@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { about } from "../data/about.js";
+import Magnetic from "./Magnetic.jsx";
 import SectionHeader from "./SectionHeader.jsx";
+import SectionShell from "./SectionShell.jsx";
 import { chip, fadeUp, stagger, viewportOnce } from "../lib/motion.js";
 
 function FileIcon({ className = "h-4 w-4" }) {
@@ -23,7 +25,7 @@ function ArrowIcon({ className = "h-3 w-3" }) {
 
 export default function About() {
   return (
-    <section id="about" className="mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-32">
+    <SectionShell id="about" className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-32">
       <SectionHeader index="01" title="About" />
 
       <div className="grid gap-12 md:grid-cols-12">
@@ -51,14 +53,16 @@ export default function About() {
               muted placeholder, same pattern as the project GitHub buttons. */}
           <motion.div variants={fadeUp} className="pt-2">
             {about.resume?.url ? (
-              <a
-                href={about.resume.url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2.5 border border-line px-4 py-2.5 font-mono text-xs text-ink transition-colors hover:border-accent/60 hover:text-accent"
-              >
-                <FileIcon /> {about.resume.label} <ArrowIcon />
-              </a>
+              <Magnetic>
+                <a
+                  href={about.resume.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2.5 border border-line px-4 py-2.5 font-mono text-xs text-ink transition-colors hover:border-accent/60 hover:text-accent"
+                >
+                  <FileIcon /> {about.resume.label} <ArrowIcon />
+                </a>
+              </Magnetic>
             ) : (
               <span
                 aria-disabled="true"
@@ -90,6 +94,6 @@ export default function About() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </SectionShell>
   );
 }

@@ -13,7 +13,7 @@ function ArrowIcon({ className = "h-3.5 w-3.5" }) {
 
 export default function Blog() {
   return (
-    <section id="blog" className="mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-32">
+    <section id="blog" className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-32">
       <SectionHeader index="06" title="Blog" />
 
       {blog.posts.length === 0 ? (

@@ -9,7 +9,7 @@ export const site = {
     headlineMuted: "I build intelligent",
     headlineAccent: "software.",
     subline:
-      "AI-powered products, developer tools, and full-stack systems — from computer-vision pipelines to RL environments.",
+      "AI-powered products, developer tools, and full-stack systems, from computer-vision pipelines to RL environments.",
   },
   footer: {
     signoff: ["Let's build.", "Train. Ship.", "Repeat."],

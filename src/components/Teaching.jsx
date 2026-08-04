@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { teaching } from "../data/teaching.js";
 import SectionHeader from "./SectionHeader.jsx";
+import SectionShell from "./SectionShell.jsx";
 import { fadeUp, stagger, viewportOnce } from "../lib/motion.js";
 
 export default function Teaching() {
   return (
-    <section id="teaching" className="mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-32">
+    <SectionShell id="teaching" className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-32">
       <SectionHeader index="05" title="Teaching" />
 
       <div className="grid gap-12 md:grid-cols-12">
@@ -43,6 +44,6 @@ export default function Teaching() {
           ))}
         </motion.ul>
       </div>
-    </section>
+    </SectionShell>
   );
 }
